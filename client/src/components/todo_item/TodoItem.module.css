@@ -1,0 +1,67 @@
+
+/*#region Todo items*/
+.todo__items{
+    margin-bottom: 50px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.todo__item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgb(226, 225, 225);
+
+}
+
+.todo__item:hover .todo__item__text{
+    opacity: 0.8;
+}
+
+.todo__item__input input[type="checkbox"]{
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.todo__item__text{
+    display: flex;
+    flex-grow: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 20px;
+}
+
+.todo__item__date{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-right: 20px;
+    color: #888; 
+}
+
+.todo__item__del button{
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    background-size: 60%;
+    border-radius: 5px;
+    background-image: url('../../images/trasrh.svg');
+}
+
+.todo__item__del button:hover{
+    background-color: #ff5252;
+}
+/*#endregion*/
