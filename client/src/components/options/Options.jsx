@@ -1,26 +1,46 @@
-import React from 'react';
-import styles from './Options.module.css';
+import React from "react";
+import { Button, Radio, Typography, Row, Col } from "antd";
+import { useState } from "react";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
-const Options = () => {
+const Options = (props) => {
+    const { onOrderBy, onSetFilterBy } = props;
+    const [filterBy, setFilterBy] = useState("");
+    const { Text } = Typography;
+    const handleChange = (e) => {
+        onSetFilterBy(e.target.value);
+        setFilterBy(e.target.value);
+    };
+    const { t } = useTranslation();
     return (
-        <div className={styles.todo__options}>
-            <div className={styles.todo__options__left}>
-                <button
-                    className={`${styles.all} ${styles.btn_active_underline}`}>
-                    all
-                </button>
-                <button className={styles.one}>done</button>
-                <button className={styles.undone}>undone</button>
-            </div>
-
-            <div className={styles.todo__options__right}>
-                <div className={styles.todo__options__name}>Sort by Date</div>
-                <div className={styles.todo__options_sort}>
-                    <button className={styles.new}></button>
-                    <button
-                        className={`${styles.last} ${styles.btn_active_bg}`}></button>
-                </div>
-            </div>
+        <div style={{ marginBottom: "40px" }}>
+            <Row>
+                <Col flex="auto">
+                    <Radio.Group value={filterBy} onChange={handleChange}>
+                        <Radio.Button value="">{t("buttons.All")}</Radio.Button>
+                        <Radio.Button value="done">
+                            {t("buttons.Done")}
+                        </Radio.Button>
+                        <Radio.Button value="undone">
+                            {t("buttons.Undone")}
+                        </Radio.Button>
+                    </Radio.Group>
+                </Col>
+                <Col>
+                    <Text type="secondary" style={{ marginRight: "10px" }}>
+                        {t("Sort by Date")}
+                    </Text>
+                    <Button
+                        icon={<ArrowDownOutlined />}
+                        onClick={() => onOrderBy("asc")}
+                    />
+                    <Button
+                        icon={<ArrowUpOutlined />}
+                        onClick={() => onOrderBy("desc")}
+                    />
+                </Col>
+            </Row>
         </div>
     );
 };

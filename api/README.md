@@ -1,4 +1,4 @@
 ###
 
-start TODO_Back_End - npm run dev
-start TODO - npm start
+start api - 'npm run dev'
+start client - 'npm start'

@@ -1,10 +1,14 @@
 import React from 'react';
 import styles from './Header.module.css';
+import { useTranslation } from 'react-i18next';
 
-const Header = () => {
+const Header = (props) => {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.title}>
-            <h1>ToDo</h1>
+            <h1>{t('title')}</h1>
+            <span>{props.task}</span>
         </div>
     );
 };
