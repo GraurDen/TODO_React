@@ -91,13 +91,15 @@ function App() {
                 name: userName,
                 password,
             });
+
             const token = res.data.token;
 
             localStorage.setItem("token", token);
+
             getTasks();
             // Handling 'Register' and 'Login' submeet buttons
             if (submitType === "register") message.info("You are registered");
-            if (submitType === "auth") navigate("/content");
+            if (submitType === "auth") navigate("/todos");
         } catch (error) {
             if (submitType === "register") message.error("Registration error");
             if (submitType === "auth") message.error("Login error");
@@ -216,11 +218,11 @@ function App() {
                     </div>
 
                     {/* logout */}
-                    <div>
+                    {userName && (
                         <button type="button" onClick={logout}>
                             Logout
                         </button>
-                    </div>
+                    )}
                 </div>
 
                 <Header task={totalItemsCount} />
@@ -238,7 +240,7 @@ function App() {
                             }
                         />
                         <Route
-                            path="/content"
+                            path="/todos"
                             element={
                                 <Content
                                     addTask={addTask}

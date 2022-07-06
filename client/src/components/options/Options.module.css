@@ -37,7 +37,6 @@
 }
 
 .todo__options__left button:hover{
-    color: #00b0ff;
     border-bottom: 2px solid #03a9f4;
 }
 
@@ -78,11 +77,11 @@ button.btn_active_underline{
     background-color: #b9e8fa;
 }
 
-.todo__options_sort .new{
+.todo__options_sort .descending{
     background-image: url('../../images/arrow_sort_up.svg');   
 }
 
-.todo__options_sort .last{
+.todo__options_sort .ascending{
     background-image: url('../../images/arrow_sort_down.svg');
 }
 

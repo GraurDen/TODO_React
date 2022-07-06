@@ -13,6 +13,9 @@ const Options = (props) => {
         setFilterBy(e.target.value);
     };
     const { t } = useTranslation();
+
+    console.log("render!!!!!!!");
+
     return (
         <div style={{ marginBottom: "40px" }}>
             <Row>
