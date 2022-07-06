@@ -1,0 +1,19 @@
+{
+    "title": "Задачи",
+    "Username": "Имя",
+    "Password": "Пароль",
+    "description": {
+        "part1": "Чтобы начать работу, отредактируйте и сохраните файл <1>src/App.js</1>.",
+        "part2": "С помощью кнопок переключайте язык между английским и русским."
+    },
+    "buttons": {
+        "buttonAdd": "Добавить",
+        "Registration": "Registration",
+        "Login": "Login",
+        "All": "Все",
+        "Done": "Готово",
+        "Undone": "Не готово"
+    },
+    "Sort by Date": "По дате",
+    "Plaseholder": "Добавить"
+}

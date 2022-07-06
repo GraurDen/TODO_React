@@ -1,0 +1,36 @@
+{
+    "name": "todo_back_end",
+    "version": "1.0.0",
+    "description": "internship",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^15.0.0",
+        "express": "^4.17.2",
+        "express-validator": "^6.14.0",
+        "i18next": "^21.6.11",
+        "i18next-browser-languagedetector": "^6.1.3",
+        "i18next-fs-backend": "^1.1.4",
+        "i18next-http-backend": "^1.3.2",
+        "i18next-http-middleware": "^3.2.0",
+        "jsonwebtoken": "^8.5.1",
+        "path": "^0.12.7",
+        "pg": "^8.7.3",
+        "pg-hstore": "^2.3.4",
+        "recursive-readdir": "^2.2.2",
+        "recursive-readdir-sync": "^1.0.6",
+        "sequelize": "^6.15.1",
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
+}

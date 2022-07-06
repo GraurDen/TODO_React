@@ -1,0 +1,19 @@
+{
+    "title": "Todos",
+    "Username": "Username",
+    "Password": "Password",
+    "description": {
+        "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
+        "part2": "Switch language between english and russian using buttons above."
+    },
+    "buttons": {
+        "buttonAdd": "Add",
+        "Registration": "Registration",
+        "Login": "Login",
+        "All": "All",
+        "Done": "Done",
+        "Undone": "Undone"
+    },
+    "Sort by Date": "Sort by Date",
+    "Plaseholder": "Add new task"
+}
