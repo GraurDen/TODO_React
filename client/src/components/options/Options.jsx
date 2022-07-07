@@ -14,8 +14,6 @@ const Options = (props) => {
     };
     const { t } = useTranslation();
 
-    console.log("render!!!!!!!");
-
     return (
         <div style={{ marginBottom: "40px" }}>
             <Row>
