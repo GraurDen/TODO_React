@@ -10,6 +10,12 @@ import Auth from "./components/auth";
 import Content from "./components/content";
 import { useTranslation } from "react-i18next";
 
+/**
+ * Что реализовать:
+ * - Радактирвание
+ * - Добавление задач в начало списка
+ */
+
 function App() {
     const [todos, setTodos] = useState([]);
     const [filteredTodos, setFilteredTodos] = useState(todos);
@@ -163,6 +169,9 @@ function App() {
             name: userInput,
         });
         setTodos([todos]);
+        console.log('response.data', response.data)
+        message.info(response.data);
+
     };
 
     // Toggle task

@@ -3,8 +3,8 @@ import { Form, Input, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import 'antd/dist/antd.min.css';
 
-const Add_task = (props) => {
-    const { showUserMessage, addTask } = props;
+const Add_task = ({ showUserMessage, addTask }) => {
+
     // Initial State
     const [userInput, setUserInput] = useState('');
 

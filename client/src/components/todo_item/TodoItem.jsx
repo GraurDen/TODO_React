@@ -4,8 +4,7 @@ import { Checkbox, Typography, Input, Button, Divider } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 const { Text } = Typography;
 
-const TodoItem = (props) => {
-    const { item, editTask, removeTask, toggleTask } = props;
+const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
 
     const [editMode, setEditMode] = useState(false);
     const [userInput, setUserInput] = useState(item.name);
@@ -16,11 +15,11 @@ const TodoItem = (props) => {
     };
     // Toggle task to 'edit mode'
     const toggleEditMode = () => {
-        setEditMode(!editMode);
+        setEditMode(true);
     };
     // Deactivate 'edit mode' and update task name
     const deactivateEditMode = () => {
-        setEditMode(!editMode);
+        setEditMode(false);
         editTask(item.id, userInput);
     };
     // Set new task name
@@ -64,14 +63,14 @@ const TodoItem = (props) => {
 
                 {!editMode && (
                     <div
-                        style={{ marginRight: '10px', maxWidth: '200px' }}
+                        style={{ marginRight: '10px', width: '100%', maxWidth: '200px' }}
                         onClick={toggleEditMode}>
                         <Text>{userInput}</Text>
                     </div>
                 )}
 
                 {editMode && (
-                    <div style={{ width: '242px' }}>
+                    <div style={{ width: '100%', maxWidth: '200px' }}>
                         <Input
                             type='text'
                             placeholder={userInput}
