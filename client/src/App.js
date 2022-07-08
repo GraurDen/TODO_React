@@ -1,11 +1,10 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState, } from "react";
 import style from "./App.module.css";
 import Header from "./components/header/Header.jsx";
 import ButtonsTranslations from "./components/ButtonsTranslations.jsx";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import { message } from "antd";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Auth from "./components/auth";
 import Content from "./components/content";
 import { useTranslation } from "react-i18next";
@@ -14,6 +13,7 @@ import { useTranslation } from "react-i18next";
  * Что реализовать:
  * - Радактирвание
  * - Добавление задач в начало списка
+ * - Локализовать всплывающие сообщения
  */
 
 function App() {
@@ -41,6 +41,7 @@ function App() {
             localStorage.removeItem("userName");
             navigate(`/auth`);
         }
+
         getTasks();
     }, [filterButtonBy, orderBy, currentPage, todos, totalItemsCount]);
 
@@ -63,8 +64,9 @@ function App() {
             if (error.response.status === 404) {
                 errorMessage = `404 Page not found`;
             }
+
             if (error.response.status === 400) {
-                errorMessage = `Bad Request`;
+                errorMessage = error.response.data.message;
             }
             if (error.response.status === 401) {
                 localStorage.removeItem("token");
@@ -135,6 +137,7 @@ function App() {
         if (response.data.count === 0 && currentPage > 1) {
             setCurrentPage(currentPage - 1);
         }
+
     };
 
     // Set current page
@@ -169,9 +172,7 @@ function App() {
             name: userInput,
         });
         setTodos([todos]);
-        console.log('response.data', response.data)
-        message.info(response.data);
-
+        message.info(response.data)
     };
 
     // Toggle task

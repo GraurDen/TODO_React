@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Checkbox, Typography, Input, Button, Divider } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -9,29 +9,64 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
     const [editMode, setEditMode] = useState(false);
     const [userInput, setUserInput] = useState(item.name);
 
+
     // Change task status
     const handleChange = () => {
         toggleTask(item.id, !item.done);
     };
+
     // Toggle task to 'edit mode'
     const toggleEditMode = () => {
         setEditMode(true);
     };
+
+    useEffect(() => {
+        setUserInput(item.name)
+    }, [item])
+
     // Deactivate 'edit mode' and update task name
-    const deactivateEditMode = () => {
+    const onBlur = (e) => {
+        const reg = new RegExp(/^\s*$/);
+
+        if (reg.test(e.currentTarget.value) && editMode === true) {
+            setUserInput(item.name)
+            e.target.blur();
+            setEditMode(false);
+            return
+        }
+
+        setUserInput(
+            e.currentTarget.value === '' ? item.name : e.currentTarget.value
+        );
+
+        if (e.currentTarget.value === item.name) {
+            e.target.blur();
+            setEditMode(false);
+            return
+        }
+
+        if (e.currentTarget.value) {
+            editTask(item.id, userInput)
+        }
+
         setEditMode(false);
-        editTask(item.id, userInput);
     };
+
+
     // Set new task name
     const handleTaskName = (e) => {
         setUserInput(e.currentTarget.value);
     };
+
+
     // Discard changes input 'onBlur' and on 'Esc' click
-    const discardChanges = (e) => {
+    const onKeyDown = (e) => {
+        // 'Escape'
         if (e.keyCode === 27) {
             setUserInput(item.name);
-            e.target.blur();
+            e.target.blur(); // Снять фокус
         }
+        // 'Enter'
         if (e.keyCode === 13) {
             setUserInput(
                 e.currentTarget.value === '' ? item.name : e.currentTarget.value
@@ -73,11 +108,11 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
                     <div style={{ width: '100%', maxWidth: '200px' }}>
                         <Input
                             type='text'
-                            placeholder={userInput}
-                            onBlur={deactivateEditMode}
+                            placeholder={item.name}
+                            onBlur={onBlur}
                             autoFocus={true}
                             onChange={handleTaskName}
-                            onKeyDown={discardChanges}
+                            onKeyDown={onKeyDown}
                         />
                     </div>
                 )}
@@ -108,4 +143,4 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
     );
 };
 
-export default TodoItem;
+export default TodoItem
