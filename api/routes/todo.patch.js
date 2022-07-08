@@ -9,7 +9,7 @@ const authMiddleWare = require('../authMiddleWare');
 todoPatchRouter.patch(
     '/todo/:id',
     param('id').notEmpty().withMessage('Parametr "id" must be not empty'),
-    body('name').optional(),
+    body('name').notEmpty().optional().isLength({ min: 2 }).withMessage("Task name must be at least 2 chars long"),
     handleErrors,
     authMiddleWare,
     async (req, res) => {
@@ -24,9 +24,11 @@ todoPatchRouter.patch(
                 });
 
                 if (nameExisting) {
-                    return res.status(400).send({
-                        message: `Задача с именем ${name} существует`,
-                    });
+                    return res.status(400).send(
+                        {
+                            message: `Задача с именем ${name} существует`,
+                        }
+                    );
                 }
             }
 
@@ -40,7 +42,7 @@ todoPatchRouter.patch(
             //
             res.send('Task updated');
         } catch (error) {
-            res.send({ message: error.message });
+            res.status(400).send({ message: `Задача с именем ${name} существует`, });
         }
     }
 );
