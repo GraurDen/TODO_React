@@ -9,7 +9,7 @@ const authMiddleWare = require('../authMiddleWare');
 todoPatchRouter.patch(
     '/todo/:id',
     param('id').notEmpty().withMessage('Parametr "id" must be not empty'),
-    body('name').notEmpty().optional().isLength({ min: 2 }).withMessage("Task name must be at least 2 chars long"),
+    check('name').isLength({ min: 2 }).withMessage("Task name must be at least 2 chars long"),
     handleErrors,
     authMiddleWare,
     async (req, res) => {
