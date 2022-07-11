@@ -4,11 +4,14 @@ import { Checkbox, Typography, Input, Button, Divider } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 const { Text } = Typography;
 
+const DATE_OPTIONS = { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', }
+
 const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
 
     const [editMode, setEditMode] = useState(false);
     const [userInput, setUserInput] = useState(item.name);
 
+    const itemCreatedAt = new Date(item.createdAt).toLocaleDateString('ru-RU', DATE_OPTIONS);
 
     // Change task status
     const handleChange = () => {
@@ -35,10 +38,6 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
             return
         }
 
-        setUserInput(
-            e.currentTarget.value === '' ? item.name : e.currentTarget.value
-        );
-
         if (e.currentTarget.value === item.name) {
             e.target.blur();
             setEditMode(false);
@@ -48,6 +47,10 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
         if (e.currentTarget.value) {
             editTask(item.id, userInput)
         }
+
+        setUserInput(
+            e.currentTarget.value === '' ? item.name : e.currentTarget.value
+        );
 
         setEditMode(false);
     };
@@ -92,20 +95,12 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
                 <Checkbox
                     style={{ marginRight: '10px' }}
                     onChange={handleChange}
-                    checked={item.done}></Checkbox>
+                    checked={item.done} />
 
                 {/* User input */}
 
-                {!editMode && (
-                    <div
-                        style={{ marginRight: '10px', width: '100%', maxWidth: '200px' }}
-                        onClick={toggleEditMode}>
-                        <Text>{userInput}</Text>
-                    </div>
-                )}
-
-                {editMode && (
-                    <div style={{ width: '100%', maxWidth: '200px' }}>
+                {editMode
+                    ? <div style={{ width: '100%', maxWidth: '200px' }}>
                         <Input
                             type='text'
                             placeholder={item.name}
@@ -115,7 +110,13 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
                             onKeyDown={onKeyDown}
                         />
                     </div>
-                )}
+
+                    : <div
+                        style={{ marginRight: '10px', width: '100%', maxWidth: '200px' }}
+                        onClick={toggleEditMode}>
+                        <Text>{userInput}</Text>
+                    </div>
+                }
 
                 {/* Creates at */}
                 <Text
@@ -125,9 +126,7 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
                         textAlign: 'right',
                     }}
                     type='secondary'>
-                    {new Date(item.createdAt)
-                        .toLocaleString('ru-RU', { hour12: false })
-                        .split(' ')}
+                    {itemCreatedAt}
                 </Text>
 
                 {/* Delete */}
@@ -136,7 +135,7 @@ const TodoItem = ({ item, editTask, removeTask, toggleTask }) => {
                     icon={<DeleteOutlined />}
                     danger
                     type='text'
-                    onClick={handleRemove}></Button>
+                    onClick={handleRemove} />
             </div>
             <Divider style={{ margin: '10px 0 10px 0' }} />
         </div>

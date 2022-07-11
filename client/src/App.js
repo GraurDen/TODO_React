@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
  * - Радактирвание
  * - Добавление задач в начало списка
  * - Локализовать всплывающие сообщения
+ * - Подключить 'Context'
  */
 
 function App() {
@@ -41,9 +42,17 @@ function App() {
             localStorage.removeItem("userName");
             navigate(`/auth`);
         }
+        getTasks()
+    }, [orderBy, filterButtonBy, orderBy, currentPage])
 
-        getTasks();
-    }, [filterButtonBy, orderBy, currentPage, todos, totalItemsCount]);
+    console.log('%cApp.js line:44 render !!!!!!!!', 'color: #007acc;',);
+
+    // useEffect(() => {
+    //     if (!token) {
+    //         localStorage.removeItem("userName");
+    //         navigate(`/auth`);
+    //     }
+    // }, []);
 
     //#region functions
 
@@ -52,21 +61,21 @@ function App() {
         (response) => response,
         (error) => {
             let errorMessage;
-            if (!error.request.response) {
+            if (!error.response) {
                 errorMessage = "No responce";
             }
-            if (error.request.response === undefined) {
+            if (error.response === undefined) {
                 errorMessage = "Client side trouble";
             }
             if (error.response) {
-                errorMessage = `${error.response.status}: ${error.response.data.message}`;
+                errorMessage = error.message;
             }
             if (error.response.status === 404) {
                 errorMessage = `404 Page not found`;
             }
 
             if (error.response.status === 400) {
-                errorMessage = error.response.data.message;
+                errorMessage = error.message;
             }
             if (error.response.status === 401) {
                 localStorage.removeItem("token");
@@ -154,12 +163,12 @@ function App() {
             name: userInput,
             done: false,
         });
-        setTodos([todos]);
+        getTasks();
     };
     // Remove task
     const removeTask = async (uuid) => {
         await axios.delete(`${baseURL}/todo/${uuid}`);
-        setTodos([todos]);
+        getTasks();
     };
     // User message
     const showUserMessage = () => {
@@ -171,8 +180,10 @@ function App() {
         const response = await axios.patch(`${baseURL}/todo/${uuid}`, {
             name: userInput,
         });
-        setTodos([todos]);
-        message.info(response.data)
+        if (response) {
+            message.info(response.data)
+        }
+        getTasks();
     };
 
     // Toggle task
@@ -180,7 +191,7 @@ function App() {
         await axios.patch(`${baseURL}/todo/${uuid}`, {
             done: status,
         });
-        setTodos([todos]);
+        getTasks();
     };
 
     // Set filter
