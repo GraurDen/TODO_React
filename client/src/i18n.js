@@ -30,7 +30,7 @@ i18n
         lng: 'en',
         preload: ['en', 'ru'],
         ns: 'translation',
-        debug: true,
+        debug: false,
         interpolation: {
             escapeValue: false,
         },

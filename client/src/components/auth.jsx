@@ -4,8 +4,7 @@ import { Form, Input, Button, Space } from 'antd';
 import 'antd/dist/antd.min.css';
 import { useTranslation } from 'react-i18next';
 
-const Auth = (props) => {
-    const { setUserName, authentication } = props;
+const Auth = ({ setUserNameToLocalStorage, authentication }) => {
     const [userInputName, setUserInputName] = useState('');
     const [userInputPass, setUserInputPass] = useState('');
     const { t } = useTranslation();
@@ -21,18 +20,18 @@ const Auth = (props) => {
 
     // Login
     const onButtonAuth = () => {
-        setUserName(userInputName);
+        setUserNameToLocalStorage(userInputName);
         authentication(userInputName, userInputPass, 'auth');
     };
 
     // Registration
     const onButtonRegister = () => {
-        setUserName(userInputName);
+        setUserNameToLocalStorage(userInputName);
         authentication(userInputName, userInputPass, 'register');
     };
 
     // Set Username
-    setUserName(userInputName);
+    setUserNameToLocalStorage(userInputName);
 
     return (
         <div

@@ -30,29 +30,23 @@ function App() {
     const [totalItemsCount, setTotalItemsCount] = useState(0);
     // Current page
     const [currentPage, setCurrentPage] = useState(1);
+    const [language, setLanguage] = useState();
     const navigate = useNavigate();
     const baseURL = "http://localhost:5000/api";
-
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("userName");
 
     const { i18n } = useTranslation();
+
+
 
     useEffect(() => {
         if (!token) {
             localStorage.removeItem("userName");
             navigate(`/auth`);
         }
+        localStorage.getItem(language)
         getTasks()
-    }, [orderBy, filterButtonBy, orderBy, currentPage])
-
-    console.log('%cApp.js line:44 render !!!!!!!!', 'color: #007acc;',);
-
-    // useEffect(() => {
-    //     if (!token) {
-    //         localStorage.removeItem("userName");
-    //         navigate(`/auth`);
-    //     }
-    // }, []);
+    }, [orderBy, filterButtonBy, orderBy, currentPage, token, language])
 
     //#region functions
 
@@ -95,7 +89,7 @@ function App() {
     });
 
     // Set userName to the localStorage
-    const setUserName = (userName) =>
+    const setUserNameToLocalStorage = (userName) =>
         localStorage.setItem("userName", userName);
 
     // Get userName from localStorage
@@ -104,17 +98,17 @@ function App() {
     // Authentication -> register / login
     const authentication = async (userName, password, submitType) => {
         try {
-            const res = await axios.post(`${baseURL}/${submitType}`, {
+            const response = await axios.post(`${baseURL}/${submitType}`, {
                 name: userName,
                 password,
             });
 
-            const token = res.data.token;
+            const token = response.data.token;
 
             localStorage.setItem("token", token);
 
             getTasks();
-            // Handling 'Register' and 'Login' submeet buttons
+            // Handling 'Register' and 'Login' submit buttons
             if (submitType === "register") message.info("You are registered");
             if (submitType === "auth") navigate("/todos");
         } catch (error) {
@@ -205,57 +199,35 @@ function App() {
             params: { lng: lng },
         });
         message.info(response.data);
+        setLanguage(response.headers["content-language"])
     };
 
     // Handling 'en' and 'ru' buttons clicks
-    const changeLanguage = (e) => {
-        setLocale(e.target.value);
-        i18n.changeLanguage(e.target.value);
+    const changeLanguage = (value) => {
+        setLocale(value);
+        i18n.changeLanguage(value);
     };
     //#endregion
 
     return (
         <div className={style.container}>
             <Suspense fallback={"Loading"}>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                    }}>
-                    {/* EN / RU */}
-                    <div>
-                        <button
-                            type="button"
-                            onClick={changeLanguage}
-                            value="en">
-                            EN
-                        </button>
-                        <button
-                            type="button"
-                            onClick={changeLanguage}
-                            value="ru">
-                            RU
-                        </button>
-                    </div>
+                <Header
+                    userName={userName}
+                    logout={logout}
+                    changeLanguage={changeLanguage}
+                    totalItemsCount={totalItemsCount}
+                    language={language}
+                />
 
-                    {/* logout */}
-                    {userName && (
-                        <button type="button" onClick={logout}>
-                            Logout
-                        </button>
-                    )}
-                </div>
-
-                <Header task={totalItemsCount} />
                 {/* Content */}
                 <div className={style.content}>
-                    {/* {testredirect && <Navigate to='/auth' replace={true} />} */}
                     <Routes>
                         <Route
                             path="/auth"
                             element={
                                 <Auth
-                                    setUserName={setUserName}
+                                    setUserNameToLocalStorage={setUserNameToLocalStorage}
                                     authentication={authentication}
                                 />
                             }

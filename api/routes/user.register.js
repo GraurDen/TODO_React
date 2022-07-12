@@ -15,17 +15,17 @@ userRgisterRouter.post(
   body("name")
     .notEmpty()
     .isLength({ min: 4 })
-    .withMessage("Name must be at least 4 chars long"), 
+    .withMessage("Name must be at least 4 chars long"),
   handleErrors,
 
   async (req, res) => {
-    const { name, password } = req.body; 
+    const { name, password } = req.body;
 
     try {
       const user = await users.findOne({
         where: { name },
       });
- 
+
       if (user) {
         return res.status(400).send({
           message: `User with name: ${name} already exists`,

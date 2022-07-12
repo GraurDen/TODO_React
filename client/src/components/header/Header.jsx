@@ -1,14 +1,49 @@
 import React from 'react';
-import styles from './Header.module.css';
 import { useTranslation } from 'react-i18next';
+import style from '../header/Header.module.css'
+import { Button } from 'antd';
 
-const Header = (props) => {
+
+const Header = ({ userName, logout, changeLanguage, totalItemsCount, language }) => {
     const { t } = useTranslation();
 
+    const handleButton = (e) => {
+        changeLanguage(e.currentTarget.value)
+    }
+
     return (
-        <div className={styles.title}>
-            <h1>{t('title')}</h1>
-            <span>{props.task}</span>
+        <div
+            style={{
+                display: "flex",
+                justifyContent: "space-between",
+            }}>
+
+            {/* EN / RU */}
+            <div>
+                <Button
+                    type="button"
+                    onClick={handleButton}
+                    value="en"
+                    disabled={language === 'en' ? true : false}>
+                    EN
+                </Button>
+                <Button
+                    type="button"
+                    onClick={handleButton}
+                    value="ru"
+                    disabled={language === 'ru' ? true : false}>
+                    RU
+                </Button>
+            </div>
+
+            <div className={style.title}>ITEMS: {totalItemsCount}</div>
+
+            {/* logout */}
+            {userName && (
+                <Button type="button" onClick={logout}>
+                    Logout
+                </Button>
+            )}
         </div>
     );
 };

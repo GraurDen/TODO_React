@@ -20,6 +20,7 @@ todoGetRouter.get(
         .withMessage(' query "page" must be equal or greate then 0 '),
     handleErrors,
     authMiddleWare,
+
     async (req, res) => {
         // Get 'user id' from request headers
         const getUserId = (req) => {

@@ -4,7 +4,6 @@ const { users } = require("../models/index");
 const { handleErrors, generateAccessToken } = require("../helpers");
 const userAuthRouter = new Router();
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 userAuthRouter.post(
   "/auth",
