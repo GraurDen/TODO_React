@@ -30,7 +30,7 @@ function App() {
     const [totalItemsCount, setTotalItemsCount] = useState(0);
     // Current page
     const [currentPage, setCurrentPage] = useState(1);
-    const [language, setLanguage] = useState();
+    const [language, setLanguage] = useState('ru');
     const navigate = useNavigate();
     const baseURL = "http://localhost:5000/api";
     const token = localStorage.getItem("userName");
@@ -44,7 +44,7 @@ function App() {
             localStorage.removeItem("userName");
             navigate(`/auth`);
         }
-        localStorage.getItem(language)
+        //localStorage.setItem("language", language);
         getTasks()
     }, [orderBy, filterButtonBy, orderBy, currentPage, token, language])
 
@@ -193,19 +193,20 @@ function App() {
         setFilterButtonBy(status);
     };
 
-    // Change locale
-    const setLocale = async (lng) => {
-        const response = await axios.get(`${baseURL}/lang/`, {
-            params: { lng: lng },
-        });
-        message.info(response.data);
-        setLanguage(response.headers["content-language"])
-    };
-
     // Handling 'en' and 'ru' buttons clicks
-    const changeLanguage = (value) => {
-        setLocale(value);
-        i18n.changeLanguage(value);
+    const changeLanguage = async (value) => {
+        const response = await axios.get(`${baseURL}/lang/`, {
+            params: { lng: value },
+        });
+
+        if (response.headers["content-language"] === 'ru') {
+            setLanguage('en');
+        }
+        if (response.headers["content-language"] === 'en') {
+            setLanguage('ru');
+        }
+        i18n.changeLanguage(language);
+        message.info(response.data);
     };
     //#endregion
 

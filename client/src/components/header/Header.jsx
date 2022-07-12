@@ -24,14 +24,14 @@ const Header = ({ userName, logout, changeLanguage, totalItemsCount, language })
                     type="button"
                     onClick={handleButton}
                     value="en"
-                    disabled={language === 'en' ? true : false}>
+                    disabled={language === 'en' ? false : true}>
                     EN
                 </Button>
                 <Button
                     type="button"
                     onClick={handleButton}
                     value="ru"
-                    disabled={language === 'ru' ? true : false}>
+                    disabled={language === 'ru' ? false : true}>
                     RU
                 </Button>
             </div>
